@@ -8,11 +8,9 @@ namespace Car_Dealership.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly TenantContext _tenantContext;
-        private readonly UserService _userService;
-        public UsersController(TenantContext tenantContext, UserService userService)
+        private readonly IUserService _userService;
+        public UsersController(IUserService userService)
         {
-            _tenantContext = tenantContext;
             _userService = userService;
         }
 
@@ -37,16 +35,17 @@ namespace Car_Dealership.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(User user)
         {
-            var newUser = await _userService.AddUserAsync(user);
-            if(newUser == null)
-            {
-                return Conflict("User(Email) already exists"); // Or handle the conflict as you prefer
-                //return BadRequest("Email already used");
-                // WHat is the difference between the 2 methods above?
-                // What ways can this conflict be handled?
-            } 
+            var result = await _userService.AddUserAsync(user);
+            return result.ToObjectResult();
+            //if(response.StatusCodes == StatusCodes.Status409Conflict)
+            //{
+            //    return Conflict("User(Email) already exists"); // Or handle the conflict as you prefer
+            //    //return BadRequest("Email already used");
+            //    // WHat is the difference between the 2 methods above?
+            //    // What ways can this conflict be handled?
+            //} 
 
-            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id}, newUser);
+            //return CreatedAtAction(nameof(GetUser), new { id = ((User)(response.Response)).Id}, response.Response);
         }
 
         [HttpPut("{id}")]
