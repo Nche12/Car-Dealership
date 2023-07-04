@@ -15,7 +15,7 @@ namespace Car_Dealership.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserGetDto>> GetUsers()
         {
             return await _userService.GetUsersAsync();
         }
@@ -33,7 +33,7 @@ namespace Car_Dealership.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+        public async Task<IActionResult> CreateUser(UserCreateDto user)
         {
             var result = await _userService.AddUserAsync(user);
             return result.ToObjectResult();
@@ -49,7 +49,7 @@ namespace Car_Dealership.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(User user)
+        public async Task<IActionResult> UpdateUser(UserEditDto user)
         {
             var userUpdate = await _userService.UpdateUserAsync(user);
             if (userUpdate == null)

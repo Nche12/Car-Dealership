@@ -3,19 +3,25 @@
     public class UserService : IUserService
     {
         private readonly TenantContext _tenantContext;
-        public UserService(TenantContext tenantContext)
+        private readonly IMapper _mapper;
+
+        public UserService(TenantContext tenantContext, IMapper mapper)
         {
             _tenantContext = tenantContext;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync()
+
+        public async Task<IEnumerable<UserGetDto>> GetUsersAsync()
         {
-            return await _tenantContext.Users.ToArrayAsync();
+            var users = await _tenantContext.Users.ToArrayAsync();
+            return users.Select(c => _mapper.Map<UserGetDto>(c)).ToList();// why not ToArrayAsync?
         }
 
-        public async Task<User?> GetUserAsync(int id)
+        public async Task<UserGetDto?> GetUserAsync(int id)
         {
-            return await _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<UserGetDto>(user) ;
         }
 
         public async Task<Result?> AddUserAsync(User user)
@@ -36,14 +42,14 @@
 
         }
 
-        public async Task<User?> UpdateUserAsync(User user)
+        public async Task<UserGetDto?> UpdateUserAsync(UserEditDto user)
         {
             var userFound = _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
             if (userFound != null)
             {
                 _tenantContext.Entry(user).State = EntityState.Modified;
                 await _tenantContext.SaveChangesAsync();//How do you apply a try catch block here?
-                return user;
+                return _mapper.Map<UserGetDto>(user);
             }
             else
             {
@@ -51,14 +57,14 @@
             }
         }
 
-        public async Task<User?> DeleteUserAsync(int id)
+        public async Task<UserGetDto?> DeleteUserAsync(int id)
         {
             var user = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user != null)
             {
                 _tenantContext.Users.Remove(user); // How do you implement a soft delete?
                 await _tenantContext.SaveChangesAsync();
-                return user;
+                return _mapper.Map<UserGetDto>(user);
             }
             else
             {
