@@ -1,7 +1,4 @@
 ﻿
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 namespace Car_Dealership.Services
 {
     public class UserService 
