@@ -5,7 +5,7 @@
     public class UserRolesController : ControllerBase
     {
         private readonly IUserRoleService _userRoleService;
-        public UserRolesController(UserRoleService userRoleService)
+        public UserRolesController(IUserRoleService userRoleService)
         {
             _userRoleService = userRoleService;
 
