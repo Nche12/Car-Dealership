@@ -21,7 +21,7 @@
         public async Task<UserGetDto?> GetUserAsync(int id)
         {
             var user = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-            return _mapper.Map<UserGetDto>(user) ;
+            return _mapper.Map<UserGetDto>(user);
         }
 
         public async Task<Result?> AddUserAsync(UserCreateDto userCreateDto)
