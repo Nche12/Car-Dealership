@@ -21,6 +21,7 @@ namespace Car_Dealership.Services
                 .Include(c => c.UserRole)
                 .ToArrayAsync();
             serviceResponse.Data = users.Select(c => _mapper.Map<UserGetDto>(c)).ToList();// why not ToArrayAsync?
+            serviceResponse.StatusCode = StatusCodes.Status200OK;
             return serviceResponse;
         }
 

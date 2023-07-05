@@ -48,17 +48,6 @@ namespace Car_Dealership.Controllers
             var newUser = await _userService.AddUserAsync(user);
             serviceResponse.Data = _mapper.Map<IActionResult>(newUser);
             return serviceResponse;
-
-            //return result.ToObjectResult();
-            //if(response.StatusCodes == StatusCodes.Status409Conflict)
-            //{
-            //    return Conflict("User(Email) already exists"); // Or handle the conflict as you prefer
-            //    //return BadRequest("Email already used");
-            //    // WHat is the difference between the 2 methods above?
-            //    // What ways can this conflict be handled?
-            //} 
-
-            //return CreatedAtAction(nameof(GetUser), new { id = ((User)(response.Response)).Id}, response.Response);
         }
 
         [HttpPut("{id}")]
