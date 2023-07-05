@@ -5,6 +5,7 @@
         public AutoMapperProfileConfiguration()
         {
             CreateMap<User, UserGetDto>();
+            CreateMap<UserEditDto, User>();
             CreateMap<UserCreateDto, User>();
         }
     }
