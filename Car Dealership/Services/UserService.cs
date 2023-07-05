@@ -14,22 +14,26 @@
 
         public async Task<IEnumerable<UserGetDto>> GetUsersAsync()
         {
-            var users = await _tenantContext.Users.ToArrayAsync();
+            var users = await _tenantContext.Users
+                .Include(c => c.UserRole)
+                .ToArrayAsync();
             return users.Select(c => _mapper.Map<UserGetDto>(c)).ToList();// why not ToArrayAsync?
         }
 
         public async Task<UserGetDto?> GetUserAsync(int id)
         {
-            var user = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _tenantContext.Users
+                .Include(c => c.UserRole)
+                .FirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<UserGetDto>(user);
         }
 
-        public async Task<Result?> AddUserAsync(UserCreateDto userCreateDto)
+        public async Task<Result?> AddUserAsync(UserEditDto userCreate)
         {
-            var userFound = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Email == userCreateDto.Email);
+            var userFound = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Email == userCreate.Email);
             if (userFound == null)
             {
-                var user = _mapper.Map<User>(userCreateDto);
+                var user = _mapper.Map<User>(userCreate);
                 _tenantContext.Users.Add(user);
                 await _tenantContext.SaveChangesAsync();
                 return new Result(StatusCodes.Status201Created, user);

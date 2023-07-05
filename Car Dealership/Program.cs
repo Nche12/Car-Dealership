@@ -6,7 +6,7 @@ global using Car_Dealership.Services;
 global using Microsoft.AspNetCore.Mvc;
 global using Car_Dealership.DTOs.User;
 global using AutoMapper;
-
+global using Car_Dealership;
 
 var builder = WebApplication.CreateBuilder(args);
 

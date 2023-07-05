@@ -2,7 +2,7 @@
 {
     public interface IUserService
     {
-        Task<Result?> AddUserAsync(UserCreateDto user);
+        Task<Result?> AddUserAsync(UserEditDto user);
         Task<UserGetDto?> DeleteUserAsync(int id);
         Task<UserGetDto?> GetUserAsync(int id);
         Task<IEnumerable<UserGetDto>> GetUsersAsync();

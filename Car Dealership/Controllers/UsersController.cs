@@ -32,7 +32,7 @@ namespace Car_Dealership.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserCreateDto user)
+        public async Task<IActionResult> CreateUser(UserEditDto user)
         {
             var result = await _userService.AddUserAsync(user);
             return result.ToObjectResult();
