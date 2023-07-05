@@ -2,10 +2,10 @@
 {
     public interface IUserService
     {
-        Task<Result?> AddUserAsync(UserEditDto user);
-        Task<UserGetDto?> DeleteUserAsync(int id);
-        Task<UserGetDto?> GetUserAsync(int id);
-        Task<IEnumerable<UserGetDto>> GetUsersAsync();
-        Task<UserGetDto?> UpdateUserAsync(UserEditDto user);
+        Task<ServiceResponse<UserGetDto?>> AddUserAsync(UserEditDto user);
+        Task<ServiceResponse<UserGetDto?>> DeleteUserAsync(int id);
+        Task<ServiceResponse<UserGetDto?>> GetUserAsync(int id);
+        Task<ServiceResponse<IEnumerable<UserGetDto>>> GetUsersAsync();
+        Task<ServiceResponse<UserGetDto?>> UpdateUserAsync(UserEditDto user);
     }
 }
