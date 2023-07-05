@@ -5,7 +5,7 @@
         Task<Result?> AddUserAsync(UserCreateDto user);
         Task<UserGetDto?> DeleteUserAsync(int id);
         Task<UserGetDto?> GetUserAsync(int id);
-        Task<IEnumerable<User>> GetUsersAsync();
+        Task<IEnumerable<UserGetDto>> GetUsersAsync();
         Task<UserGetDto?> UpdateUserAsync(UserEditDto user);
     }
 }

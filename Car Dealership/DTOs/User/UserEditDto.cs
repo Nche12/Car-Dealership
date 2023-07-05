@@ -1,4 +1,4 @@
-﻿namespace Car_Dealership.Models
+﻿namespace Car_Dealership.DTOs.User
 {
     public class UserEditDto
     {

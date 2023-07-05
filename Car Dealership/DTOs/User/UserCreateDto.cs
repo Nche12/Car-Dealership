@@ -14,6 +14,6 @@
 
         public int UserRoleId { get; set; }
 
-        public UserRole? UserRole { get; set; }
+        //public UserRole? UserRole { get; set; }
     }
 }

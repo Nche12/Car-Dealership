@@ -24,11 +24,12 @@
             return _mapper.Map<UserGetDto>(user) ;
         }
 
-        public async Task<Result?> AddUserAsync(User user)
+        public async Task<Result?> AddUserAsync(UserCreateDto userCreateDto)
         {
-            var userFound = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
-            if (userFound != null)
+            var userFound = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Email == userCreateDto.Email);
+            if (userFound == null)
             {
+                var user = _mapper.Map<User>(userCreateDto);
                 _tenantContext.Users.Add(user);
                 await _tenantContext.SaveChangesAsync();
                 return new Result(StatusCodes.Status201Created, user);
@@ -42,14 +43,14 @@
 
         }
 
-        public async Task<UserGetDto?> UpdateUserAsync(UserEditDto user)
+        public async Task<UserGetDto?> UpdateUserAsync(UserEditDto userEditDto)
         {
-            var userFound = _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+            var userFound = _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == userEditDto.Id);
             if (userFound != null)
             {
-                _tenantContext.Entry(user).State = EntityState.Modified;
+                _tenantContext.Entry(userEditDto).State = EntityState.Modified;
                 await _tenantContext.SaveChangesAsync();//How do you apply a try catch block here?
-                return _mapper.Map<UserGetDto>(user);
+                return _mapper.Map<UserGetDto>(userEditDto);
             }
             else
             {
