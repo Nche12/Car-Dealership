@@ -5,66 +5,138 @@ namespace Car_Dealership.Services
     public class UserRoleService : IUserRoleService
     {
         private readonly TenantContext _tenantContext;
+        private readonly IMapper _mapper;
 
-        public UserRoleService(TenantContext tenantContext) 
-        { 
+        public UserRoleService(TenantContext tenantContext, IMapper mapper)
+        {
             _tenantContext = tenantContext;
+            _mapper = mapper;
         }
-        public async Task<IEnumerable<UserRole>> GetUserRolesAsync()
+        public async Task<ServiceResponse<IEnumerable<UserRoleGetDto>>> GetUserRolesAsync()
         {
-            return await _tenantContext.UserRoles.ToArrayAsync();
+            var serviceResponse = new ServiceResponse<IEnumerable<UserRoleGetDto>>();
+
+            var userRoles = await _tenantContext.UserRoles.ToArrayAsync();
+            serviceResponse.Data = userRoles.Select(c => _mapper.Map<UserRoleGetDto>(c)).ToList();
+            serviceResponse.StatusCode = StatusCodes.Status200OK;
+            return serviceResponse;
         }
 
-        public async Task<UserRole?> GetUserRoleAsync(int id)
+        public async Task<ServiceResponse<UserRoleGetDto?>> GetUserRoleAsync(int id)
         {
-            return await _tenantContext.UserRoles.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task<Result?> AddUserRoleAsync(UserRole userRole)
-        {
-            var roleFound = _tenantContext.UserRoles.FirstOrDefaultAsync(x => x.Role == userRole.Role);
-            if (roleFound != null)
+            var serviceResponse = new ServiceResponse<UserRoleGetDto?>();
+            var userRole = await _tenantContext.UserRoles.FirstOrDefaultAsync(x => x.Id == id);
+            if(userRole == null)
             {
-                _tenantContext.UserRoles.Add(userRole);
-                await _tenantContext.SaveChangesAsync();
-                return new Result(StatusCodes.Status201Created, userRole);
+                serviceResponse.Data = null;
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Role not found";
+                serviceResponse.StatusCode = StatusCodes.Status404NotFound;
             } 
             else
             {
-                return new Result(StatusCodes.Status409Conflict, null);
+                serviceResponse.Data = _mapper.Map<UserRoleGetDto>(userRole);
+                serviceResponse.StatusCode = StatusCodes.Status200OK;
             }
-            
+            return serviceResponse;
         }
 
-        public async Task<UserRole?> UpdateUserRole(UserRole userRole)
+        public async Task<ServiceResponse<UserRoleGetDto?>> AddUserRoleAsync(UserRoleCreateDto userRoleCreateDto)
         {
-            var userRoleFound = _tenantContext.UserRoles.FirstOrDefault(x => x.Id == userRole.Id);
-            if(userRoleFound != null)
+            var serviceResponse = new ServiceResponse<UserRoleGetDto?>();
+            var roleUsed = _tenantContext.UserRoles.FirstOrDefaultAsync(r => r.Role == userRoleCreateDto.Role);
+            if (roleUsed != null)
             {
-                _tenantContext.Entry(userRole).State = EntityState.Modified;
-                await _tenantContext.SaveChangesAsync();
-                return userRole;
+                var userRole = _mapper.Map<UserRole>(userRoleCreateDto);
+                _tenantContext.UserRoles.Add(userRole);
+
+                try
+                {
+                    await _tenantContext.SaveChangesAsync();
+                    serviceResponse.Data = _mapper.Map<UserRoleGetDto>(userRole);
+                    serviceResponse.StatusCode = StatusCodes.Status201Created; 
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserRoleExists(userRole.Id))
+                    {
+                        serviceResponse.Data = null;
+                        serviceResponse.Success = false;
+                        serviceResponse.Message = "Role already exists";
+                        serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
             else
             {
-                return null;
+                serviceResponse.Data = null;
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Role already exists";
+                serviceResponse.StatusCode = StatusCodes.Status409Conflict;
             }
-            
+
+            return serviceResponse;
         }
 
-        public async Task<UserRole?> DeleteUserRoleAsync(int id)
+        public async Task<ServiceResponse<UserRoleGetDto?>> UpdateUserRole(UserRoleEditDto userRoleEditDto)
         {
-            var roleFound = await _tenantContext.UserRoles.FirstOrDefaultAsync(x => x.Id == id);
-            if (roleFound != null)
+            var serviceResponse = new ServiceResponse<UserRoleGetDto?>();
+            var userRole = _mapper.Map<UserRole>(userRoleEditDto);
+            _tenantContext.Entry(userRole).State = EntityState.Modified;
+            try
             {
-                _tenantContext.Remove(roleFound);
                 await _tenantContext.SaveChangesAsync();
-                return roleFound;
+                serviceResponse.Data = _mapper.Map<UserRoleGetDto>(userRole);
+                serviceResponse.StatusCode = StatusCodes.Status204NoContent;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if(!UserRoleExists(userRole.Id))
+                {
+                    serviceResponse.Data = null;
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Role not found";
+                    serviceResponse.StatusCode = StatusCodes.Status404NotFound;
+                } 
+                else
+                {
+                    throw;
+                }
+                
+            }
+            return serviceResponse;
+
+        }
+
+        public async Task<ServiceResponse<UserRoleGetDto?>> DeleteUserRoleAsync(int id)
+        {
+            var serviceResponse = new ServiceResponse<UserRoleGetDto?>();
+            var role = await _tenantContext.UserRoles.FirstOrDefaultAsync(x => x.Id == id);
+            if (role != null)
+            {
+                _tenantContext.Remove(role);
+                await _tenantContext.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<UserRoleGetDto>(role);
+                serviceResponse.StatusCode = StatusCodes.Status204NoContent;
             }
             else
             {
-                return null;
+                serviceResponse.Data = null;
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Role not found";
+                serviceResponse.StatusCode = StatusCodes.Status404NotFound;
             }
+            return serviceResponse;
+
+        }
+
+        private bool UserRoleExists(int id)
+        {
+            return _tenantContext.UserRoles.Any(x => x.Id == id);
         }
 
 

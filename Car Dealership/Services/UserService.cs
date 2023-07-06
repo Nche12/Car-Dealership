@@ -86,7 +86,7 @@ namespace Car_Dealership.Services
                 var userGetDto = _mapper.Map<UserGetDto>(user);
                 serviceResponse.Data = userGetDto;
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException)
             {
                 if (!UserExists(user.Id))
                 {

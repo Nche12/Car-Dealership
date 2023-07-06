@@ -5,6 +5,7 @@ global using Car_Dealership.Data;
 global using Car_Dealership.Services;
 global using Microsoft.AspNetCore.Mvc;
 global using Car_Dealership.DTOs.User;
+global using Car_Dealership.DTOs.UserRole;
 global using AutoMapper;
 global using Car_Dealership;
 

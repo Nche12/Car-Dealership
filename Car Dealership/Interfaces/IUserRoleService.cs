@@ -2,10 +2,10 @@
 {
     public interface IUserRoleService
     {
-        Task<IEnumerable<UserRole>> GetUserRolesAsync();
-        Task<UserRole?> GetUserRoleAsync(int id);
-        Task<Result?> AddUserRoleAsync(UserRole userRole);
-        Task<UserRole?> UpdateUserRole(UserRole userRole);
-        Task<UserRole?> DeleteUserRoleAsync(int id);
+        Task<ServiceResponse<IEnumerable<UserRoleGetDto>>> GetUserRolesAsync();
+        Task<ServiceResponse<UserRoleGetDto?>> GetUserRoleAsync(int id);
+        Task<ServiceResponse<UserRoleGetDto?>> AddUserRoleAsync(UserRoleCreateDto userRole);
+        Task<ServiceResponse<UserRoleGetDto?>> UpdateUserRole(UserRoleEditDto userRole);
+        Task<ServiceResponse<UserRoleGetDto?>> DeleteUserRoleAsync(int id);
     }
 }

@@ -12,55 +12,33 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<UserRole>> GetUserRoles()
+        public async Task<ServiceResponse<IEnumerable<UserRoleGetDto>>> GetUserRoles()
         {
             return await _userRoleService.GetUserRolesAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserRole(int id)
+        public async Task<ServiceResponse<UserRoleGetDto?>> GetUserRole(int id)
         {
-            var role = await _userRoleService.GetUserRoleAsync(id);
-
-            if (role == null)
-            {
-                return NotFound();
-            }
-            return Ok(role);
+            return await _userRoleService.GetUserRoleAsync(id);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserRole(UserRole userRole)
+        public async Task<ServiceResponse<UserRoleGetDto?>> CreateUserRole(UserRoleCreateDto userRole)
         {
-            var result = await _userRoleService.AddUserRoleAsync(userRole);
-            return result.ToObjectResult();
+            return await _userRoleService.AddUserRoleAsync(userRole);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUserRole(UserRole userRole)
+        public async Task<ServiceResponse<UserRoleGetDto?>> UpdateUserRole(UserRoleEditDto userRole)
         {
-            var userRoleFound = await _userRoleService.UpdateUserRole(userRole);
-            if(userRoleFound == null)
-            {
-                return Conflict("User role not found");
-            }
-
-            return NoContent();
+            return await _userRoleService.UpdateUserRole(userRole);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserRole(int id)
+        public async Task<ServiceResponse<UserRoleGetDto?>> DeleteUserRole(int id)
         {
-            var role = await _userRoleService.DeleteUserRoleAsync(id);
-            if(role == null)
-            {
-                return Conflict("User role not Found");
-            }
-            else
-            {
-                return NoContent();
-            }
-
+            return await _userRoleService.DeleteUserRoleAsync(id);
         }
 
     }
