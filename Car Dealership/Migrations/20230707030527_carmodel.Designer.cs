@@ -3,6 +3,7 @@ using Car_Dealership.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_Dealership.Migrations
 {
     [DbContext(typeof(TenantContext))]
-    partial class TenantContextModelSnapshot : ModelSnapshot
+    [Migration("20230707030527_carmodel")]
+    partial class carmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,6 +23,23 @@ namespace Car_Dealership.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Car_Dealership.DTOs.CarMake.CarMakeGetDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CarMakeGetDto");
+                });
 
             modelBuilder.Entity("Car_Dealership.Models.CarMake", b =>
                 {
@@ -116,7 +136,7 @@ namespace Car_Dealership.Migrations
 
             modelBuilder.Entity("Car_Dealership.Models.CarModel", b =>
                 {
-                    b.HasOne("Car_Dealership.Models.CarMake", "CarMake")
+                    b.HasOne("Car_Dealership.DTOs.CarMake.CarMakeGetDto", "CarMake")
                         .WithMany()
                         .HasForeignKey("CarMakeId")
                         .OnDelete(DeleteBehavior.Cascade)
