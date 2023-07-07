@@ -1,7 +1,4 @@
-﻿using Car_Dealership.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace Car_Dealership.Services
+﻿namespace Car_Dealership.Services
 {
     public class UserService : IUserService
     {
@@ -51,23 +48,28 @@ namespace Car_Dealership.Services
         public async Task<ServiceResponse<UserGetDto?>> AddUserAsync(UserCreateDto userCreate)
         {
             var serviceResponse = new ServiceResponse<UserGetDto?>();
-            var userFound = await _tenantContext.Users.FirstOrDefaultAsync(x => x.Email == userCreate.Email);
-            if (userFound == null)
+            var user = _mapper.Map<User>(userCreate);
+            _tenantContext.Users.Add(user);
+            try
             {
-                var user = _mapper.Map<User>(userCreate);
-                _tenantContext.Users.Add(user);
                 await _tenantContext.SaveChangesAsync();
                 serviceResponse.Data = _mapper.Map<UserGetDto?>(user);
                 serviceResponse.StatusCode = StatusCodes.Status201Created;
             }
-            else
+            catch (DbUpdateException ex)
             {
-                // Optionally, handle the case where the user already exists.
-                // For example, you could throw an exception or return null.
-                serviceResponse.Data = null;
-                serviceResponse.Success = false;
-                serviceResponse.Message = "Email Address already used";
-                serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                if (ex.InnerException != null && ex.InnerException.Message.Equals($"Cannot insert duplicate key row in object 'dbo.Users' with unique index 'IX_Users_Email'. The duplicate key value is ({user.Email})."))
+                {
+                    serviceResponse.Data = null;
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = $"Email Address '{user.Email}' is already used";
+                    serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                }
+                else
+                {
+                    throw;
+                }
+
             }
 
             return serviceResponse;
@@ -78,7 +80,6 @@ namespace Car_Dealership.Services
         {
             var serviceResponse = new ServiceResponse<UserGetDto?>();
             var user = _mapper.Map<User>(userEditDto);
-            //var userFound = _tenantContext.Users.FirstOrDefaultAsync(x => x.Id == userEditDto.Id);
             _tenantContext.Entry(user).State = EntityState.Modified;
             try
             {
@@ -97,14 +98,10 @@ namespace Car_Dealership.Services
                 }
                 else
                 {
-                    //serviceResponse.Data = null;
-                    //serviceResponse.Success = false;
-                    //serviceResponse.Message = ex.Message;
-                    //serviceResponse.StatusCode = StatusCodes.Status500InternalServerError;
                     throw;
                 }
             }
-            
+
             return serviceResponse;
         }
 

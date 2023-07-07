@@ -30,7 +30,7 @@ namespace Car_Dealership.Services
                 {
                     serviceResponse.Data = null;
                     serviceResponse.Success = false;
-                    serviceResponse.Message = $"{model.Name} already exists";
+                    serviceResponse.Message = $"'{model.Name}' already exists";
                     serviceResponse.StatusCode = StatusCodes.Status409Conflict;
                 } 
                 else

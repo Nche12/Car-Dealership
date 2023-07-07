@@ -54,7 +54,7 @@
                 {
                     serviceResponse.Data = null;
                     serviceResponse.Success = false;
-                    serviceResponse.Message = $"{carMake.Name} already esists";
+                    serviceResponse.Message = $"'{carMake.Name}' already esists";
                     serviceResponse.StatusCode = StatusCodes.Status409Conflict;
                 }
                 else

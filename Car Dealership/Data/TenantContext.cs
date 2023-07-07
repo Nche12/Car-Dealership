@@ -16,6 +16,15 @@ namespace Car_Dealership.Data
             modelBuilder.Entity<CarModel>()
                 .HasIndex(u => u.Name) 
                 .IsUnique();
+
+
+            modelBuilder.Entity<UserRole>()
+                .HasIndex(u => u.Role)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(U => U.Email)
+                .IsUnique();
         }
 
         public DbSet<User> Users { get; set; }

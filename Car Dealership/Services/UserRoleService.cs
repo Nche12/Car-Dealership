@@ -44,9 +44,10 @@ namespace Car_Dealership.Services
         public async Task<ServiceResponse<UserRoleGetDto?>> AddUserRoleAsync(UserRoleCreateDto userRoleCreateDto)
         {
             var serviceResponse = new ServiceResponse<UserRoleGetDto?>();
-            var roleUsed = await _tenantContext.UserRoles.FirstOrDefaultAsync(r => r.Role == userRoleCreateDto.Role);
-            if (roleUsed == null)
-            {
+            //var roleUsed = await _tenantContext.UserRoles.FirstOrDefaultAsync(r => r.Role == userRoleCreateDto.Role);
+
+            //if (roleUsed == null)
+            //{
                 var userRole = _mapper.Map<UserRole>(userRoleCreateDto);
                 _tenantContext.UserRoles.Add(userRole);
 
@@ -56,13 +57,13 @@ namespace Car_Dealership.Services
                     serviceResponse.Data = _mapper.Map<UserRoleGetDto>(userRole);
                     serviceResponse.StatusCode = StatusCodes.Status201Created; 
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException ex)
                 {
-                    if (!UserRoleExists(userRole.Id))
-                    {
+                    if (ex.InnerException != null && ex.InnerException.Message.Equals($"Cannot insert duplicate key row in object 'dbo.UserRoles' with unique index 'IX_UserRoles_Role'. The duplicate key value is ({userRole.Role})."))
+                {
                         serviceResponse.Data = null;
                         serviceResponse.Success = false;
-                        serviceResponse.Message = "Role already exists";
+                        serviceResponse.Message = $"'{userRole.Role}' already exists";
                         serviceResponse.StatusCode = StatusCodes.Status409Conflict;
                     }
                     else
@@ -70,14 +71,14 @@ namespace Car_Dealership.Services
                         throw;
                     }
                 }
-            }
-            else
-            {
-                serviceResponse.Data = null;
-                serviceResponse.Success = false;
-                serviceResponse.Message = "Role already exists";
-                serviceResponse.StatusCode = StatusCodes.Status409Conflict;
-            }
+            //}
+            //else
+            //{
+            //    serviceResponse.Data = null;
+            //    serviceResponse.Success = false;
+            //    serviceResponse.Message = "Role already exists";
+            //    serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+            //}
 
             return serviceResponse;
         }
