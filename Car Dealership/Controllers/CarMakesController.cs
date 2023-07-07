@@ -4,8 +4,8 @@
     [Route("api/[controller]")]
     public class CarMakesController : ControllerBase
     {
-        private readonly CarMakeService _carMakeService;
-        public CarMakesController(CarMakeService carMakeService)
+        private readonly ICarMakeService _carMakeService;
+        public CarMakesController(ICarMakeService carMakeService)
         {
             _carMakeService = carMakeService;
         }

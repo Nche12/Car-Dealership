@@ -44,8 +44,8 @@ namespace Car_Dealership.Services
         public async Task<ServiceResponse<UserRoleGetDto?>> AddUserRoleAsync(UserRoleCreateDto userRoleCreateDto)
         {
             var serviceResponse = new ServiceResponse<UserRoleGetDto?>();
-            var roleUsed = _tenantContext.UserRoles.FirstOrDefaultAsync(r => r.Role == userRoleCreateDto.Role);
-            if (roleUsed != null)
+            var roleUsed = await _tenantContext.UserRoles.FirstOrDefaultAsync(r => r.Role == userRoleCreateDto.Role);
+            if (roleUsed == null)
             {
                 var userRole = _mapper.Map<UserRole>(userRoleCreateDto);
                 _tenantContext.UserRoles.Add(userRole);

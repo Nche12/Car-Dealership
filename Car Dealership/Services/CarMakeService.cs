@@ -40,7 +40,7 @@
         public async Task<ServiceResponse<CarMakeGetDto?>> AddCarMakeAsync(CarMakeCreateDto carMakeCreateDto)
         {
             var serviceResponse = new ServiceResponse<CarMakeGetDto?>();
-            var carMakeFound = _tenantContext.CarMakes.FirstOrDefaultAsync(c => c.Name == carMakeCreateDto.Name);
+            var carMakeFound = await _tenantContext.CarMakes.FirstOrDefaultAsync(c => c.Name == carMakeCreateDto.Name);
             if (carMakeFound == null)
             {
                 var carMake = _mapper.Map<CarMake>(carMakeCreateDto);
@@ -91,13 +91,13 @@
         {
             var serviceResponse = new ServiceResponse<CarMakeGetDto?>();
             var carMake = await _tenantContext.CarMakes.FirstOrDefaultAsync(c => c.Id == id);
-            if(carMake == null)
+            if (carMake == null)
             {
                 serviceResponse.Data = null;
                 serviceResponse.Success = false;
                 serviceResponse.Message = "Car Make was not found";
                 serviceResponse.StatusCode = StatusCodes.Status404NotFound;
-            } 
+            }
             else
             {
                 _tenantContext.CarMakes.Remove(carMake);
@@ -108,7 +108,7 @@
             return serviceResponse;
         }
 
-       public bool CarMakeExists(int id)
+        public bool CarMakeExists(int id)
         {
             return _tenantContext.CarMakes.Any(c => c.Id == id);
         }
