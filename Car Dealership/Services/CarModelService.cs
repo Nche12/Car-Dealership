@@ -5,9 +5,9 @@ namespace Car_Dealership.Services
     public class CarModelService : ICarModelService
     {
         private readonly TenantContext _tenantContext;
-        private readonly IMapper _mapper; 
-        public CarModelService(TenantContext tenantContext, IMapper mapper) 
-        { 
+        private readonly IMapper _mapper;
+        public CarModelService(TenantContext tenantContext, IMapper mapper)
+        {
             _tenantContext = tenantContext;
             _mapper = mapper;
         }
@@ -15,22 +15,31 @@ namespace Car_Dealership.Services
         public async Task<ServiceResponse<CarModelGetDto?>> AddCarModelAsync(CarModelCreateDto carModelCreateDto)
         {
             var serviceResponse = new ServiceResponse<CarModelGetDto?>();
-            var modelFound = await _tenantContext.CarModels.FirstOrDefaultAsync(m => m.Name == carModelCreateDto.Name);
-            if (modelFound == null)
+            var model = _mapper.Map<CarModel>(carModelCreateDto);
+            _tenantContext.CarModels.Add(model);
+
+            try
             {
-                var model = _mapper.Map<CarModel>(carModelCreateDto);
-                _tenantContext.CarModels.Add(model);
                 await _tenantContext.SaveChangesAsync();
                 serviceResponse.Data = _mapper.Map<CarModelGetDto>(model);
                 serviceResponse.StatusCode = StatusCodes.Status201Created;
             }
-            else
+            catch (DbUpdateException ex)
             {
-                serviceResponse.Data = null;
-                serviceResponse.Success = false;
-                serviceResponse.Message = "Car Model already exists";
-                serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                if (ex.InnerException != null && ex.InnerException.Message.Equals($"Cannot insert duplicate key row in object 'dbo.CarModels' with unique index 'IX_CarModels_Name'. The duplicate key value is ({model.Name})."))
+                {
+                    serviceResponse.Data = null;
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = $"{model.Name} already exists";
+                    serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                } 
+                else
+                {
+                    throw;
+                }
+
             }
+            
             return serviceResponse;
         }
 
@@ -38,7 +47,7 @@ namespace Car_Dealership.Services
         {
             var serviceResponse = new ServiceResponse<CarModelGetDto?>();
             var model = await _tenantContext.CarModels.FirstOrDefaultAsync(m => m.Id == id);
-            if(model != null)
+            if (model != null)
             {
                 _tenantContext.CarModels.Remove(model);
                 await _tenantContext.SaveChangesAsync();
@@ -58,8 +67,10 @@ namespace Car_Dealership.Services
         public async Task<ServiceResponse<CarModelGetDto?>> GetCarModelAsync(int id)
         {
             var serviceResponse = new ServiceResponse<CarModelGetDto?>();
-            var model = await _tenantContext.CarModels.FirstOrDefaultAsync(m => m.Id == id);
-            if(model != null)
+            var model = await _tenantContext.CarModels
+                .Include(c => c.CarMake)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (model != null)
             {
                 serviceResponse.Data = _mapper.Map<CarModelGetDto>(model);
                 serviceResponse.StatusCode = StatusCodes.Status200OK;
@@ -113,7 +124,7 @@ namespace Car_Dealership.Services
             return serviceResponse;
         }
 
-        public bool CarModelExists(int id) 
+        public bool CarModelExists(int id)
         {
             return _tenantContext.CarModels.Any(c => c.Id == id);
         }

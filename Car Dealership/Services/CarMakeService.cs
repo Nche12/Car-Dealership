@@ -23,7 +23,7 @@
         {
             var serviceResponse = new ServiceResponse<CarMakeGetDto?>();
             var carMake = await _tenantContext.CarMakes.FirstOrDefaultAsync(c => c.Id == id);
-            if (carMake == null)
+            if (carMake is null)
             {
                 serviceResponse.Data = null;
                 serviceResponse.StatusCode = StatusCodes.Status404NotFound;
@@ -40,22 +40,29 @@
         public async Task<ServiceResponse<CarMakeGetDto?>> AddCarMakeAsync(CarMakeCreateDto carMakeCreateDto)
         {
             var serviceResponse = new ServiceResponse<CarMakeGetDto?>();
-            var carMakeFound = await _tenantContext.CarMakes.FirstOrDefaultAsync(c => c.Name == carMakeCreateDto.Name);
-            if (carMakeFound == null)
+            var carMake = _mapper.Map<CarMake>(carMakeCreateDto);
+            _tenantContext.CarMakes.Add(carMake);
+            try
             {
-                var carMake = _mapper.Map<CarMake>(carMakeCreateDto);
-                _tenantContext.CarMakes.Add(carMake);
                 await _tenantContext.SaveChangesAsync();
                 serviceResponse.Data = _mapper.Map<CarMakeGetDto>(carMake);
                 serviceResponse.StatusCode = StatusCodes.Status201Created;
-            }
-            else
+            } 
+            catch (DbUpdateException ex)
             {
-                serviceResponse.Data = null;
-                serviceResponse.Success = false;
-                serviceResponse.Message = "Car Make already used";
-                serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                if (ex.InnerException != null && ex.InnerException.Message.Equals($"Cannot insert duplicate key row in object 'dbo.CarMakes' with unique index 'IX_CarMakes_Name'. The duplicate key value is ({carMake.Name})."))
+                {
+                    serviceResponse.Data = null;
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = $"{carMake.Name} already esists";
+                    serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                }
+                else
+                {
+                    throw;
+                }
             }
+
             return serviceResponse;
         }
 
@@ -91,7 +98,7 @@
         {
             var serviceResponse = new ServiceResponse<CarMakeGetDto?>();
             var carMake = await _tenantContext.CarMakes.FirstOrDefaultAsync(c => c.Id == id);
-            if (carMake == null)
+            if (carMake is null)
             {
                 serviceResponse.Data = null;
                 serviceResponse.Success = false;
