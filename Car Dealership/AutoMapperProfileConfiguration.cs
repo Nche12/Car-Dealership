@@ -1,5 +1,4 @@
-﻿
-namespace Car_Dealership
+﻿namespace Car_Dealership
 {
     public class AutoMapperProfileConfiguration : Profile
     {
@@ -12,6 +11,10 @@ namespace Car_Dealership
             CreateMap<UserRole, UserRoleGetDto>();
             CreateMap<UserRoleEditDto, UserRole>();
             CreateMap<UserRoleCreateDto, UserRole>();
+
+            CreateMap<CarMake, CarMakeGetDto>();
+            CreateMap<CarMakeEditDto, CarMake>();
+            CreateMap<CarMakeCreateDto, CarMake>();
         }
     }
 }

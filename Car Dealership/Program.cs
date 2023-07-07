@@ -6,6 +6,8 @@ global using Car_Dealership.Services;
 global using Microsoft.AspNetCore.Mvc;
 global using Car_Dealership.DTOs.User;
 global using Car_Dealership.DTOs.UserRole;
+global using Car_Dealership.DTOs.CarMake;
+
 global using AutoMapper;
 global using Car_Dealership;
 
@@ -22,6 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+builder.Services.AddScoped<ICarMakeService, CarMakeService>();
 
 builder.Services.AddCors(options =>
 {

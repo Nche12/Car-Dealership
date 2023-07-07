@@ -121,6 +121,7 @@ namespace Car_Dealership.Services
             {
                 _tenantContext.Users.Remove(user); // How do you implement a soft delete?
                 await _tenantContext.SaveChangesAsync();
+                serviceResponse.StatusCode = StatusCodes.Status204NoContent;
                 serviceResponse.Data = _mapper.Map<UserGetDto>(user);
             }
             else

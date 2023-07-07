@@ -9,5 +9,6 @@ namespace Car_Dealership.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<CarMake> CarMakes { get; set; }
     }
 }
