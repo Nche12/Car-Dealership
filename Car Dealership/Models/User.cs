@@ -1,6 +1,6 @@
 ﻿namespace Car_Dealership.Models
 {
-    public class User
+    public class User : Auditable
     {
         public int Id { get; set; }
 
