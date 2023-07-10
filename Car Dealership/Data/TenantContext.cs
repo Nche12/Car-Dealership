@@ -67,6 +67,11 @@ namespace Car_Dealership.Data
                 .HasIndex(t => t.Name)
                 .IsUnique();
 
+            modelBuilder.Entity<FuelType>()
+                .HasQueryFilter(f => f.IsDeleted == null || f.IsDeleted == false) 
+                .HasIndex(f => f.Name)
+                .IsUnique();
+
         }
 
         public DbSet<User> Users { get; set; }

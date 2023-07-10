@@ -22,12 +22,12 @@
             }
             catch (DbUpdateException ex)
             {
-                if (ex.InnerException != null)
+                if (ex.InnerException != null && ex.InnerException.Message.Equals($"Cannot insert duplicate key row in object 'dbo.TransmissionTypes' with unique index 'IX_TransmissionTypes_Name'. The duplicate key value is ({transmissionType.Name})."))
                 {
                     serviceResponse.Data = null;
                     serviceResponse.Success = false;
-                    serviceResponse.StatusCode = StatusCodes.Status404NotFound;
-                    serviceResponse.Message = $"{transmissionType?.Name} was not found";
+                    serviceResponse.StatusCode = StatusCodes.Status409Conflict;
+                    serviceResponse.Message = $"Transmission Type '{transmissionType?.Name}' already Exists";
                 }
                 else
                 {

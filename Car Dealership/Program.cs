@@ -30,6 +30,7 @@ builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<ICarMakeService, CarMakeService>();
 builder.Services.AddScoped<ICarModelService, CarModelService>();
 builder.Services.AddScoped<ITransmissionTypeService, TransmissionTypeService>();
+builder.Services.AddScoped<IFuelTypeService, FuelTypeService>();
 
 builder.Services.AddCors(options =>
 {
