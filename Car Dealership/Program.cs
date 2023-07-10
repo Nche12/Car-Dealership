@@ -8,6 +8,8 @@ global using Car_Dealership.DTOs.User;
 global using Car_Dealership.DTOs.UserRole;
 global using Car_Dealership.DTOs.CarMake;
 global using Car_Dealership.DTOs.CarModel;
+global using Car_Dealership.DTOs.TransmissionType;
+ 
 
 
 global using AutoMapper;
@@ -28,6 +30,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<ICarMakeService, CarMakeService>();
 builder.Services.AddScoped<ICarModelService, CarModelService>();
+builder.Services.AddScoped<ITransmissionTypeService, TransmissionTypeService>();
 
 builder.Services.AddCors(options =>
 {

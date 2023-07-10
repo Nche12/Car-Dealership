@@ -21,6 +21,10 @@ namespace Car_Dealership
             CreateMap<CarModelEditDto, CarModel>();
             CreateMap<CarModelCreateDto, CarModel>();
 
+            CreateMap<TransmissionType, TransmissionTypeGetDto>();
+            CreateMap<TransmissionTypeEditDto, TransmissionType>();
+            CreateMap<TransmissionTypeCreateDto, TransmissionType>();
+
         }
     }
 }

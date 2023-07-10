@@ -62,12 +62,18 @@ namespace Car_Dealership.Data
                 .WithMany(u => u.UsersDeleted)
                 .HasForeignKey(u => u.DeletedById);
 
+            modelBuilder.Entity<TransmissionType>()
+                .HasQueryFilter(t => t.IsDeleted == null || t.IsDeleted == false)
+                .HasIndex(t => t.Name)
+                .IsUnique();
+
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<CarMake> CarMakes { get; set; }
         public DbSet<CarModel> CarModels { get; set; }
+        public DbSet<TransmissionType> TransmissionTypes { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
