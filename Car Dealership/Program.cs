@@ -9,8 +9,7 @@ global using Car_Dealership.DTOs.UserRole;
 global using Car_Dealership.DTOs.CarMake;
 global using Car_Dealership.DTOs.CarModel;
 global using Car_Dealership.DTOs.TransmissionType;
- 
-
+global using Car_Dealership.DTOs.FuelType;
 
 global using AutoMapper;
 global using Car_Dealership;

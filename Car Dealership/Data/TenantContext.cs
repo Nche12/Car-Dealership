@@ -74,6 +74,7 @@ namespace Car_Dealership.Data
         public DbSet<CarMake> CarMakes { get; set; }
         public DbSet<CarModel> CarModels { get; set; }
         public DbSet<TransmissionType> TransmissionTypes { get; set; }
+        public DbSet<FuelType> FuelTypes { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

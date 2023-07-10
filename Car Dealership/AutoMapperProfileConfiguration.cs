@@ -1,4 +1,6 @@
 ﻿
+using Car_Dealership.DTOs.FuelType;
+
 namespace Car_Dealership
 {
     public class AutoMapperProfileConfiguration : Profile
@@ -24,6 +26,10 @@ namespace Car_Dealership
             CreateMap<TransmissionType, TransmissionTypeGetDto>();
             CreateMap<TransmissionTypeEditDto, TransmissionType>();
             CreateMap<TransmissionTypeCreateDto, TransmissionType>();
+
+            CreateMap<FuelType, FuelTypeGetDto>();
+            CreateMap<FuelTypeCreateDto, FuelType>();
+            CreateMap<FuelTypeEditDto, FuelType>();
 
         }
     }
