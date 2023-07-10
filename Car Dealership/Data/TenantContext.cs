@@ -22,7 +22,6 @@ namespace Car_Dealership.Data
                 .HasIndex(u => u.Name)
                 .IsUnique();
 
-
             modelBuilder.Entity<UserRole>()
                 .HasQueryFilter(e => e.IsDeleted == null || e.IsDeleted == false)
                 .HasIndex(u => u.Role)
@@ -124,9 +123,6 @@ namespace Car_Dealership.Data
                             trackable.LastModifiedDate = DateTime.UtcNow;
                             break;
                     }
-
-                    // Do not touch these two fields, as they are handled by the MySql database with default values.
-                    
                     
                 }
             }
