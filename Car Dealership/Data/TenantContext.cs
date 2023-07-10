@@ -28,6 +28,21 @@ namespace Car_Dealership.Data
                 .HasIndex(u => u.Role)
                 .IsUnique();
 
+            modelBuilder.Entity<UserRole>()
+                .HasMany(ur => ur.Users)
+                .WithOne(u => u.UserRole)
+                .HasForeignKey(ur => ur.UserRoleId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(u => u.AddedBy)
+                .WithMany(u => u.UserRolesAdded)
+                .HasForeignKey(u => u.AddedById);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(u => u.DeletedBy)
+                .WithMany(u => u.UserRolesDeleted)
+                .HasForeignKey(u => u.DeletedById);
+
             modelBuilder.Entity<User>()
                 .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
                 .HasIndex(U => U.Email)
@@ -37,6 +52,16 @@ namespace Car_Dealership.Data
                 .HasOne(u => u.UserRole)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.UserRoleId);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.AddedBy)
+                .WithMany(u => u.UsersAdded)
+                .HasForeignKey(u => u.AddedById);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.DeletedBy)
+                .WithMany(u => u.UsersDeleted)
+                .HasForeignKey(u => u.DeletedById);
 
         }
 

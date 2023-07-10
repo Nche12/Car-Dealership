@@ -17,5 +17,11 @@
         public int UserRoleId { get; set; } 
 
         public UserRole? UserRole { get; set; } 
+
+        public ICollection<User>? UsersAdded { get; set; }
+        public ICollection<User>? UsersDeleted { get; set; }
+
+        public ICollection<UserRole>? UserRolesAdded { get; set; }
+        public ICollection<UserRole>? UserRolesDeleted { get; set; }
     }
 }
