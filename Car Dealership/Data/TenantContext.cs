@@ -13,18 +13,18 @@ namespace Car_Dealership.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CarMake>()
-                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
+                .HasQueryFilter(e => e.IsDeleted == null || e.IsDeleted == false)
                 .HasIndex(u => u.Name)
                 .IsUnique();
 
             modelBuilder.Entity<CarModel>()
-                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
+                .HasQueryFilter(e => e.IsDeleted == null || e.IsDeleted == false)
                 .HasIndex(u => u.Name)
                 .IsUnique();
 
 
             modelBuilder.Entity<UserRole>()
-                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
+                .HasQueryFilter(e => e.IsDeleted == null || e.IsDeleted == false)
                 .HasIndex(u => u.Role)
                 .IsUnique();
 
@@ -44,7 +44,7 @@ namespace Car_Dealership.Data
                 .HasForeignKey(u => u.DeletedById);
 
             modelBuilder.Entity<User>()
-                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
+                .HasQueryFilter(e => e.IsDeleted == null || e.IsDeleted == false)
                 .HasIndex(U => U.Email)
                 .IsUnique();
 
@@ -100,6 +100,8 @@ namespace Car_Dealership.Data
                             trackable.IsDeleted = true;
                             trackable.DeletedDate = DateTime.UtcNow;
                             trackable.DeletedById = userId;
+                            entry.Property("LastModifiedDate").IsModified = false;
+                            entry.Property("AddedDate").IsModified = false;
                             break;
 
                         // If this is an addition operation, save the userId of adder, and set IsDeleted to false
@@ -107,6 +109,7 @@ namespace Car_Dealership.Data
                             if (!trackable.AddedById.HasValue)
                             {
                                 trackable.AddedById = userId;
+                                trackable.AddedDate = DateTime.UtcNow;
                             }
                             trackable.IsDeleted = false;
                             break;
@@ -116,12 +119,15 @@ namespace Car_Dealership.Data
                         case EntityState.Modified:
                             entry.Property("DeletedById").IsModified = false;
                             entry.Property("DeletedDate").IsModified = false;
+                            entry.Property("AddedById").IsModified = false;
+                            entry.Property("AddedDate").IsModified = false;
+                            trackable.LastModifiedDate = DateTime.UtcNow;
                             break;
                     }
 
                     // Do not touch these two fields, as they are handled by the MySql database with default values.
-                    entry.Property("AddedDate").IsModified = false;
-                    entry.Property("LastModifiedDate").IsModified = false;
+                    
+                    
                 }
             }
         }
