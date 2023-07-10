@@ -13,22 +13,30 @@ namespace Car_Dealership.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CarMake>()
-                .HasQueryFilter(e => !e.IsDeleted)
+                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
                 .HasIndex(u => u.Name)
                 .IsUnique();
 
             modelBuilder.Entity<CarModel>()
+                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
                 .HasIndex(u => u.Name)
                 .IsUnique();
 
 
             modelBuilder.Entity<UserRole>()
+                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
                 .HasIndex(u => u.Role)
                 .IsUnique();
 
             modelBuilder.Entity<User>()
+                .HasQueryFilter(e => !e.IsDeleted.GetValueOrDefault())
                 .HasIndex(U => U.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserRole)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.UserRoleId);
 
         }
 

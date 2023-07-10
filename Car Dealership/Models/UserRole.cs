@@ -5,5 +5,7 @@
         public int Id { get; set; }
 
         public string? Role { get; set; }
+
+        public required ICollection<User> Users { get; set; }
     }
 }
