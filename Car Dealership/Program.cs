@@ -10,6 +10,7 @@ global using Car_Dealership.DTOs.CarMake;
 global using Car_Dealership.DTOs.CarModel;
 global using Car_Dealership.DTOs.TransmissionType;
 global using Car_Dealership.DTOs.FuelType;
+global using Car_Dealership.DTOs.SeatType;
 
 global using AutoMapper;
 global using Car_Dealership;
@@ -18,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<TenantContext>(options => 
+builder.Services.AddDbContext<TenantContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,6 +32,7 @@ builder.Services.AddScoped<ICarMakeService, CarMakeService>();
 builder.Services.AddScoped<ICarModelService, CarModelService>();
 builder.Services.AddScoped<ITransmissionTypeService, TransmissionTypeService>();
 builder.Services.AddScoped<IFuelTypeService, FuelTypeService>();
+builder.Services.AddScoped<ISeatTypeService, SeatTypeService>();
 
 builder.Services.AddCors(options =>
 {
@@ -48,7 +50,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); 
+    app.UseSwagger();
     app.UseSwaggerUI();
 }
 

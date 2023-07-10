@@ -72,6 +72,11 @@ namespace Car_Dealership.Data
                 .HasIndex(f => f.Name)
                 .IsUnique();
 
+            modelBuilder.Entity<SeatType>()
+                .HasQueryFilter(s => s.IsDeleted == null || s.IsDeleted == false)
+                .HasIndex(s => s.Name)
+                .IsUnique();
+
         }
 
         public DbSet<User> Users { get; set; }
@@ -80,6 +85,7 @@ namespace Car_Dealership.Data
         public DbSet<CarModel> CarModels { get; set; }
         public DbSet<TransmissionType> TransmissionTypes { get; set; }
         public DbSet<FuelType> FuelTypes { get; set; }
+        public DbSet<SeatType> SeatTypes { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
