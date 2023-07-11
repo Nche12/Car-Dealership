@@ -83,7 +83,7 @@ namespace Car_Dealership.Data
                 .IsUnique();
 
             modelBuilder.Entity<CarDriveType>()
-                .HasQueryFilter(c => c.IsDeleted == null && c.IsDeleted == false);
+                .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
         }
 
         public DbSet<User> Users { get; set; }
