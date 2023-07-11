@@ -34,7 +34,7 @@
             return await _seatTypeService.UpdateSeatTypeAsync(SeatTypeEditDto);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")]//if deleted, can not be created again because the Name fiesld is unique??
         public async Task<ServiceResponse<SeatTypeGetDto?>> DeleteSeatType(int id)
         {
             return await _seatTypeService.DeleteSeatTypeAsync(id);

@@ -72,11 +72,15 @@ namespace Car_Dealership.Data
                 .HasIndex(f => f.Name)
                 .IsUnique();
 
-            modelBuilder.Entity<SeatType>()
+            modelBuilder.Entity<SeatType>()//Deleted type can not be created again ???
                 .HasQueryFilter(s => s.IsDeleted == null || s.IsDeleted == false)
                 .HasIndex(s => s.Name)
                 .IsUnique();
 
+            modelBuilder.Entity<CarType>()
+                .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false) 
+                .HasIndex(c => c.Name)
+                .IsUnique();
         }
 
         public DbSet<User> Users { get; set; }
@@ -86,6 +90,7 @@ namespace Car_Dealership.Data
         public DbSet<TransmissionType> TransmissionTypes { get; set; }
         public DbSet<FuelType> FuelTypes { get; set; }
         public DbSet<SeatType> SeatTypes { get; set; }
+        public DbSet<CarType> CarTypes { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
