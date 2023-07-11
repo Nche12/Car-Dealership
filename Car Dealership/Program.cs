@@ -12,6 +12,7 @@ global using Car_Dealership.DTOs.TransmissionType;
 global using Car_Dealership.DTOs.FuelType;
 global using Car_Dealership.DTOs.SeatType;
 global using Car_Dealership.DTOs.CarType;
+global using Car_Dealership.DTOs.DriveType;
 
 global using AutoMapper;
 global using Car_Dealership;
@@ -35,6 +36,7 @@ builder.Services.AddScoped<ITransmissionTypeService, TransmissionTypeService>();
 builder.Services.AddScoped<IFuelTypeService, FuelTypeService>();
 builder.Services.AddScoped<ISeatTypeService, SeatTypeService>();
 builder.Services.AddScoped<ICarTypeService, CarTypeService>();
+builder.Services.AddScoped<ICarDriveTypeService, CarDriveTypeService>();
 
 builder.Services.AddCors(options =>
 {

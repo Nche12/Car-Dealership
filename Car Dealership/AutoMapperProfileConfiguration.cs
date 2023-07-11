@@ -35,6 +35,10 @@
             CreateMap<CarType, CarTypeGetDto>();
             CreateMap<CarTypeCreateDto, CarType>();
             CreateMap<CarTypeEditDto, CarType>();
+
+            CreateMap<CarDriveType, CarDriveTypeGetDto>();
+            CreateMap<CarDriveTypeCreateDto, CarDriveType>();
+            CreateMap<CarDriveTypeEditDto, CarDriveType>();
         }
     }
 }
