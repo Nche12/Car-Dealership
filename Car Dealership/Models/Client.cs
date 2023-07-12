@@ -8,6 +8,6 @@
         public string IdNumber { get; set; } = string.Empty;
         public string PnoneNumber { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string SawAdvert { get; set; } = string.Empty;
+        public string SawAdvert { get; set; } = string.Empty;//to replace this with Advert Platform Id and model (model to be created)
     }
 }
