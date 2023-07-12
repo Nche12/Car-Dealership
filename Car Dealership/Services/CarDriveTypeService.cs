@@ -83,7 +83,7 @@
         public async Task<ServiceResponse<CarDriveTypeGetDto?>> UpdateCarDriveTypeAsync(CarDriveTypeEditDto carDriveTypeEditDto)
         {
             var serviceResponse = new ServiceResponse<CarDriveTypeGetDto?>();
-            var drivetype = _mapper.Map<CarDriveTypeGetDto>(carDriveTypeEditDto);
+            var drivetype = _mapper.Map<CarDriveType>(carDriveTypeEditDto);
             _tenantContext.Entry(drivetype).State = EntityState.Modified;
             try
             {
