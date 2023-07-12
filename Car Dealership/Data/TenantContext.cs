@@ -84,6 +84,9 @@ namespace Car_Dealership.Data
 
             modelBuilder.Entity<CarDriveType>()
                 .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
+
+            modelBuilder.Entity<CarColour>()
+               .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
         }
 
         public DbSet<User> Users { get; set; }
@@ -95,6 +98,7 @@ namespace Car_Dealership.Data
         public DbSet<SeatType> SeatTypes { get; set; }
         public DbSet<CarType> CarTypes { get; set; }
         public DbSet<CarDriveType> CarDriveTypes { get; set; }
+        public DbSet<CarColour> CarColours { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

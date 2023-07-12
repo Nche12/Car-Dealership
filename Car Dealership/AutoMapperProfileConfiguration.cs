@@ -39,6 +39,10 @@
             CreateMap<CarDriveType, CarDriveTypeGetDto>();
             CreateMap<CarDriveTypeCreateDto, CarDriveType>();
             CreateMap<CarDriveTypeEditDto, CarDriveType>();
+
+            CreateMap<CarColour, CarColourGetDto>();
+            CreateMap<CarColourCreateDto, CarColour>();
+            CreateMap<CarColourEditDto, CarColour>();
         }
     }
 }
