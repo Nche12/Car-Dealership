@@ -1,4 +1,5 @@
-﻿namespace Car_Dealership
+﻿
+namespace Car_Dealership
 {
     public class AutoMapperProfileConfiguration : Profile
     {
@@ -43,6 +44,10 @@
             CreateMap<CarColour, CarColourGetDto>();
             CreateMap<CarColourCreateDto, CarColour>();
             CreateMap<CarColourEditDto, CarColour>();
+
+            CreateMap<Client, ClientGetDto>();
+            CreateMap<ClientCreateDto, Client>();
+            CreateMap<ClientEditDto, Client>();
         }
     }
 }
