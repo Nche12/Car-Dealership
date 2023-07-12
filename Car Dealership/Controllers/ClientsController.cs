@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Car_Dealership.Controllers
+﻿namespace Car_Dealership.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
