@@ -1,4 +1,5 @@
 ﻿
+
 namespace Car_Dealership
 {
     public class AutoMapperProfileConfiguration : Profile
@@ -48,6 +49,11 @@ namespace Car_Dealership
             CreateMap<Client, ClientGetDto>();
             CreateMap<ClientCreateDto, Client>();
             CreateMap<ClientEditDto, Client>();
+
+            CreateMap<Car, CarGetDto>()
+                .ForMember(dest => dest.CarMakeName, opt => opt.MapFrom(src => src.CarMake == null ? null : src.CarMake.Name));
+            CreateMap<CarCreateDto, Car>();
+            CreateMap<CarEditDto, Car>();
         }
     }
 }

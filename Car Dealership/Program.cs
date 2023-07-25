@@ -15,6 +15,7 @@ global using Car_Dealership.DTOs.CarType;
 global using Car_Dealership.DTOs.DriveType;
 global using Car_Dealership.DTOs.CarColour;
 global using Car_Dealership.DTOs.Client;
+global using Car_Dealership.DTOs.Car;
 
 global using AutoMapper;
 global using Car_Dealership;
