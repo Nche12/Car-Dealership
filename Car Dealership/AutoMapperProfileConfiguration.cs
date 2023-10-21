@@ -48,6 +48,10 @@ namespace Car_Dealership
             CreateMap<Client, ClientGetDto>();
             CreateMap<ClientCreateDto, Client>();
             CreateMap<ClientEditDto, Client>();
+
+            CreateMap<Frequency,  FrequencyGetDto>();
+            CreateMap<FrequencyCreateDto, Frequency>();
+            CreateMap<FrequencyEditDto, Frequency>();
         }
     }
 }

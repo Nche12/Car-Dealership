@@ -15,6 +15,8 @@ global using Car_Dealership.DTOs.CarType;
 global using Car_Dealership.DTOs.DriveType;
 global using Car_Dealership.DTOs.CarColour;
 global using Car_Dealership.DTOs.Client;
+global using Car_Dealership.DTOs.Frequency;
+
 
 global using AutoMapper;
 global using Car_Dealership;
@@ -41,6 +43,7 @@ builder.Services.AddScoped<ICarTypeService, CarTypeService>();
 builder.Services.AddScoped<ICarDriveTypeService, CarDriveTypeService>();
 builder.Services.AddScoped<ICarColourService, CarColourService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IFrequencyService, FrequencyService>();
 
 builder.Services.AddCors(options =>
 {
