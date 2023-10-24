@@ -92,7 +92,9 @@ namespace Car_Dealership.Data
                 .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
 
             modelBuilder.Entity<Frequency>()
-                .HasQueryFilter(f => f.IsDeleted == null || f.IsDeleted == false);
+                .HasQueryFilter(f => f.IsDeleted == null || f.IsDeleted == false)
+                .HasIndex(f => f.Name)
+                .IsUnique();
         }
 
         public DbSet<User> Users { get; set; }

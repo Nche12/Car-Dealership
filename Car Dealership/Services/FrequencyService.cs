@@ -14,7 +14,7 @@
         {
             var serviceResponse = new ServiceResponse<FrequencyGetDto?>();
             var frequency = _mapper.Map<Frequency>(frequencyCreateDto);
-            var frequencyFound = _tenantContext.Frequencies.FirstOrDefaultAsync(f => frequency.Name == f.Name);
+            var frequencyFound = await _tenantContext.Frequencies.FirstOrDefaultAsync(f => f.Name == frequencyCreateDto.Name);
             if(frequencyFound == null)
             {
                 _tenantContext.Frequencies.Add(frequency);
