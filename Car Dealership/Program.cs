@@ -16,7 +16,7 @@ global using Car_Dealership.DTOs.DriveType;
 global using Car_Dealership.DTOs.CarColour;
 global using Car_Dealership.DTOs.Client;
 global using Car_Dealership.DTOs.Frequency;
-
+global using Car_Dealership.DTOs.AdvertisingPlatform;
 
 global using AutoMapper;
 global using Car_Dealership;
@@ -44,6 +44,7 @@ builder.Services.AddScoped<ICarDriveTypeService, CarDriveTypeService>();
 builder.Services.AddScoped<ICarColourService, CarColourService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IFrequencyService, FrequencyService>();
+builder.Services.AddScoped<IAdvertPlatformService, AdvertPlatformService>();
 
 builder.Services.AddCors(options =>
 {

@@ -1,4 +1,6 @@
 ﻿
+using Car_Dealership.DTOs.AdvertisingPlatform;
+
 namespace Car_Dealership
 {
     public class AutoMapperProfileConfiguration : Profile
@@ -52,6 +54,10 @@ namespace Car_Dealership
             CreateMap<Frequency,  FrequencyGetDto>();
             CreateMap<FrequencyCreateDto, Frequency>();
             CreateMap<FrequencyEditDto, Frequency>();
+
+            CreateMap<AdvertisingPlatform, AdvertisingPlatformGetDto>();
+            CreateMap<AdvertisingPlatformCreateDto, AdvertisingPlatform>();
+            CreateMap<AdvertisingPlatformEditDto, AdvertisingPlatform>();
         }
     }
 }

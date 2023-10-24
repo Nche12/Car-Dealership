@@ -92,9 +92,11 @@ namespace Car_Dealership.Data
                 .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
 
             modelBuilder.Entity<Frequency>()
-                .HasQueryFilter(f => f.IsDeleted == null || f.IsDeleted == false)
-                .HasIndex(f => f.Name)
-                .IsUnique();
+                .HasQueryFilter(f => f.IsDeleted == null || f.IsDeleted == false);
+                
+            modelBuilder.Entity<AdvertisingPlatform>()
+                .HasQueryFilter(ap => ap.IsDeleted == null || ap.IsDeleted == false);
+
         }
 
         public DbSet<User> Users { get; set; }
@@ -109,6 +111,7 @@ namespace Car_Dealership.Data
         public DbSet<CarColour> CarColours { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Frequency> Frequencies { get; set; }
+        public DbSet<AdvertisingPlatform> AdvertisingPlatforms { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
