@@ -31,24 +31,86 @@
             return serviceResponse;
         }
 
-        public Task<ServiceResponse<AdvertisingPlatformGetDto?>> DeleteAdvertPlatformAsync(int id)
+        public async Task<ServiceResponse<AdvertisingPlatformGetDto?>> DeleteAdvertPlatformAsync(int id)
         {
-            throw new NotImplementedException();
+            var serviceResponse = new ServiceResponse<AdvertisingPlatformGetDto?>();
+            var adPlatform = await _tenantContext.AdvertisingPlatforms.FirstOrDefaultAsync(ap =>ap.Id == id);
+            if(adPlatform != null)
+            {
+                _tenantContext.AdvertisingPlatforms.Remove(adPlatform);
+                await _tenantContext.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<AdvertisingPlatformGetDto>(adPlatform);
+                serviceResponse.StatusCode = StatusCodes.Status204NoContent;
+            }
+            else
+            {
+                serviceResponse.Data= null;
+                serviceResponse.Success= false;
+                serviceResponse.StatusCode = StatusCodes.Status404NotFound;
+                serviceResponse.Message = "Advertising Platform not found.";
+            }
+            return serviceResponse;
         }
 
-        public Task<ServiceResponse<AdvertisingPlatformEditDto?>> GetAdvertPlatformAsync(int id)
+        public async Task<ServiceResponse<AdvertisingPlatformGetDto?>> GetAdvertPlatformAsync(int id)
         {
-            throw new NotImplementedException();
+            var serviceResponse = new ServiceResponse<AdvertisingPlatformGetDto?>();
+            var adPlatform = await _tenantContext.AdvertisingPlatforms.FirstOrDefaultAsync(ap => ap.Id == id);
+            if(adPlatform != null)
+            {
+                serviceResponse.Data = _mapper.Map<AdvertisingPlatformGetDto>(adPlatform) ;
+                serviceResponse.StatusCode = StatusCodes.Status200OK;
+            }
+            else
+            {
+                serviceResponse.Data= null;
+                serviceResponse.Success= false;
+                serviceResponse.StatusCode = StatusCodes.Status404NotFound;
+                serviceResponse.Message = "Advertising Platform not found.";
+            }
+            return serviceResponse;
         }
 
-        public Task<ServiceResponse<IEnumerable<AdvertisingPlatformGetDto>>> GetAdvertPlatformsAsync()
+        public async Task<ServiceResponse<IEnumerable<AdvertisingPlatformGetDto>>> GetAdvertPlatformsAsync()
         {
-            throw new NotImplementedException();
+            var serviceResponse = new ServiceResponse<IEnumerable<AdvertisingPlatformGetDto>>();
+            var adPlatforms = await _tenantContext.AdvertisingPlatforms.ToArrayAsync();
+            serviceResponse.Data = adPlatforms.Select(ap => _mapper.Map<AdvertisingPlatformGetDto>(ap)).ToList();
+            serviceResponse.StatusCode= StatusCodes.Status200OK;
+            return serviceResponse;
         }
 
-        public Task<ServiceResponse<AdvertisingPlatformGetDto?>> UpdateAdvertPlatformAsync(AdvertisingPlatformEditDto AdvertPlatformuEditDto)
+        public async Task<ServiceResponse<AdvertisingPlatformGetDto?>> UpdateAdvertPlatformAsync(AdvertisingPlatformEditDto advertPlatformuEditDto)
         {
-            throw new NotImplementedException();
+            var serviceResponse = new ServiceResponse<AdvertisingPlatformGetDto?>(); 
+            var adPlatform = _mapper.Map<AdvertisingPlatform>(advertPlatformuEditDto);
+            _tenantContext.AdvertisingPlatforms.Entry(adPlatform).State = EntityState.Modified;
+            try
+            {
+                await _tenantContext.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<AdvertisingPlatformGetDto>(adPlatform);
+                serviceResponse.StatusCode = StatusCodes.Status204NoContent;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!adPlatformExists(adPlatform.Id))
+                {
+                    serviceResponse.Data = null;
+                    serviceResponse.Success = false;
+                    serviceResponse.StatusCode = StatusCodes.Status404NotFound;
+                    serviceResponse.Message = "Advertising Platform not found.";
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return serviceResponse;
+        }
+
+        public bool adPlatformExists(int  id)
+        {
+            return _tenantContext.AdvertisingPlatforms.Any(ap => ap.Id == id);
         }
     }
 }

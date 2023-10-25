@@ -18,6 +18,7 @@ global using Car_Dealership.DTOs.Client;
 global using Car_Dealership.DTOs.Frequency;
 global using Car_Dealership.DTOs.AdvertisingPlatform;
 
+
 global using AutoMapper;
 global using Car_Dealership;
 
