@@ -3,8 +3,8 @@
     public class Car : Auditable
     {
         public int Id { get; set; }
-        public int CarMakeId { get; set; }
-        public CarMake? CarMake { get; set; }
+        //public int CarMakeId { get; set; }
+        //public CarMake? CarMake { get; set; }
         public int CarModelId { get; set; }
         public CarModel? CarModel { get; set; }
         public string Colour { get; set; } = string.Empty;

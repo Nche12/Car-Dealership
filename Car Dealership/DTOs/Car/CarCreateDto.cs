@@ -2,7 +2,7 @@
 {
     public class CarCreateDto
     {
-        public int CarMakeId { get; set; }
+        //public int CarMakeId { get; set; }
         public int CarModelId { get; set; }
         public string Colour { get; set; } = string.Empty;
         public double Mileage { get; set; }

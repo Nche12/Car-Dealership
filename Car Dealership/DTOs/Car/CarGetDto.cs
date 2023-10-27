@@ -3,8 +3,8 @@
     public class CarGetDto
     {
         public int Id { get; set; }
-        public int CarMakeId { get; set; }
-        public CarMakeGetDto? CarMake { get; set; }
+        //public int CarMakeId { get; set; }
+        //public CarMakeGetDto? CarMake { get; set; }
         public int CarModelId { get; set; }
         public CarModelGetDto? CarModel { get; set; }
         public string Colour { get; set; } = string.Empty;
