@@ -66,7 +66,7 @@ namespace Car_Dealership.Migrations
 
                     b.HasIndex("FrequencyId");
 
-                    b.ToTable("AdvertisingPlatforms");
+                    b.ToTable("AdvertisingPlatforms", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.CarColour", b =>
@@ -105,7 +105,7 @@ namespace Car_Dealership.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.ToTable("CarColours");
+                    b.ToTable("CarColours", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.CarDriveType", b =>
@@ -144,7 +144,7 @@ namespace Car_Dealership.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.ToTable("CarDriveTypes");
+                    b.ToTable("CarDriveTypes", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.CarMake", b =>
@@ -186,7 +186,7 @@ namespace Car_Dealership.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("CarMakes");
+                    b.ToTable("CarMakes", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.CarModel", b =>
@@ -233,7 +233,7 @@ namespace Car_Dealership.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("CarModels");
+                    b.ToTable("CarModels", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.CarType", b =>
@@ -275,7 +275,7 @@ namespace Car_Dealership.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("CarTypes");
+                    b.ToTable("CarTypes", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.Client", b =>
@@ -334,7 +334,7 @@ namespace Car_Dealership.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.Frequency", b =>
@@ -373,7 +373,7 @@ namespace Car_Dealership.Migrations
 
                     b.HasIndex("DeletedById");
 
-                    b.ToTable("Frequencies");
+                    b.ToTable("Frequencies", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.FuelType", b =>
@@ -415,7 +415,7 @@ namespace Car_Dealership.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("FuelTypes");
+                    b.ToTable("FuelTypes", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.SeatType", b =>
@@ -457,7 +457,7 @@ namespace Car_Dealership.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("SeatTypes");
+                    b.ToTable("SeatTypes", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.TransmissionType", b =>
@@ -499,7 +499,7 @@ namespace Car_Dealership.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("TransmissionTypes");
+                    b.ToTable("TransmissionTypes", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.User", b =>
@@ -562,7 +562,7 @@ namespace Car_Dealership.Migrations
 
                     b.HasIndex("UserRoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.UserRole", b =>
@@ -604,7 +604,7 @@ namespace Car_Dealership.Migrations
                         .IsUnique()
                         .HasFilter("[Role] IS NOT NULL");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Car_Dealership.Models.AdvertisingPlatform", b =>
