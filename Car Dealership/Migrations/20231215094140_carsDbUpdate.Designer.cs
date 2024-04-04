@@ -4,6 +4,7 @@ using Car_Dealership.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_Dealership.Migrations
 {
     [DbContext(typeof(TenantContext))]
-    partial class TenantContextModelSnapshot : ModelSnapshot
+    [Migration("20231215094140_carsDbUpdate")]
+    partial class carsDbUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -385,9 +388,6 @@ namespace Car_Dealership.Migrations
                     b.Property<DateTime?>("AddedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AdvertisingPlatformId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("DeletedById")
                         .HasColumnType("int");
 
@@ -416,6 +416,10 @@ namespace Car_Dealership.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SawAdvert")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -423,8 +427,6 @@ namespace Car_Dealership.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddedById");
-
-                    b.HasIndex("AdvertisingPlatformId");
 
                     b.HasIndex("DeletedById");
 
@@ -860,19 +862,11 @@ namespace Car_Dealership.Migrations
                         .WithMany()
                         .HasForeignKey("AddedById");
 
-                    b.HasOne("Car_Dealership.Models.AdvertisingPlatform", "AdvertisingPlatform")
-                        .WithMany()
-                        .HasForeignKey("AdvertisingPlatformId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Car_Dealership.Models.User", "DeletedBy")
                         .WithMany()
                         .HasForeignKey("DeletedById");
 
                     b.Navigation("AddedBy");
-
-                    b.Navigation("AdvertisingPlatform");
 
                     b.Navigation("DeletedBy");
                 });

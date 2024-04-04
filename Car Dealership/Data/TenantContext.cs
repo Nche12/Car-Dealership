@@ -89,6 +89,11 @@ namespace Car_Dealership.Data
                .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
 
             modelBuilder.Entity<Client>()
+                .HasOne(c => c.AdvertisingPlatform)
+                .WithMany()
+                .HasForeignKey(c => c.AdvertisingPlatformId)
+                .OnDelete(DeleteBehavior.Restrict);// or .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Client>()
                 .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
 
             modelBuilder.Entity<Frequency>()

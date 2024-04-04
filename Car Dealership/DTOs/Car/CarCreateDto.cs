@@ -14,6 +14,7 @@
         public DateTime? ReturnedDate { get; set; }
         public DateTime? ResoldDate { get; set; }
         public double? SoldAmount { get; set; }
+        public int ClientId { get; set; }
         public double? ClientAmount { get; set; }
         public double? CommissionAmount { get; set; }
         public int UserId { get; set; } // capture person who sold the car

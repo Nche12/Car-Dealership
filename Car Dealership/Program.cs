@@ -51,16 +51,18 @@ builder.Services.AddScoped<ICarService, CarService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("MyPolicy",
+    options.AddPolicy("AllowOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:5168", "https://localhost:7196")
+            builder.WithOrigins("http://localhost:4200", "http://localhost:5168", "https://localhost:7196", "https://localhost:44383", "https://localhost:64115")
             .AllowAnyHeader()
             .AllowAnyMethod();
         });
 });
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -70,6 +72,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+//Enable CORS
+app.UseCors("AllowOrigin");
 
 app.UseAuthorization();
 
