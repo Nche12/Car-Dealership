@@ -73,7 +73,7 @@
         public async Task<ServiceResponse<IEnumerable<CarGetDto>>> GetCarsAsync()
         {
             var serviceResponse = new ServiceResponse<IEnumerable<CarGetDto>>();
-            var cars = await _tenantContext.Cars.ToArrayAsync();
+            var cars = await _tenantContext.Cars.Include(c => c.CarModel).ToArrayAsync();
             serviceResponse.Data = cars.Select(c => _mapper.Map<CarGetDto>(c)).ToList();
             serviceResponse.StatusCode = StatusCodes.Status200OK; 
             return serviceResponse;

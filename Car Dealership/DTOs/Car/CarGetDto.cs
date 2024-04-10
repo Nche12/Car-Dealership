@@ -24,5 +24,6 @@
         public int UserId { get; set; } // capture person who sold the car
         public UserGetDto? User { get; set; }
         public bool? IsSold { get; set; }
+
     }
 }

@@ -57,6 +57,7 @@ namespace Car_Dealership
             CreateMap<AdvertisingPlatformCreateDto, AdvertisingPlatform>();
             CreateMap<AdvertisingPlatformEditDto, AdvertisingPlatform>();
 
+            CreateMap<CarModelGetDto, CarModel>();
             CreateMap<Car, CarGetDto>();
             CreateMap<CarCreateDto, Car>();
             CreateMap <CarEditDto, Car>();

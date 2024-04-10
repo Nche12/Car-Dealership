@@ -6,5 +6,10 @@
         public string Name { get; set; } = string.Empty;
         public int CarMakeId { get; set; }
         public CarMakeGetDto? CarMake { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
