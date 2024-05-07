@@ -103,7 +103,9 @@ namespace Car_Dealership.Data
                 .HasQueryFilter(ap => ap.IsDeleted == null || ap.IsDeleted == false);
 
             modelBuilder.Entity<Car>()
-                .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
+                .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false)
+                .HasIndex(c => c.VinNumber)
+                .IsUnique();
 
         }
 

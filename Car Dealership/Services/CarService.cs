@@ -75,6 +75,7 @@
             var serviceResponse = new ServiceResponse<IEnumerable<CarGetDto>>();
             var cars = await _tenantContext.Cars
                             .Include(c => c.CarModel)
+                            .Include(c => c.CarColour)
                             .Include(c => c.AdvertisingPlatform)
                             .Include(c => c.User)
                             .ToArrayAsync();

@@ -7,7 +7,8 @@
         //public CarMake? CarMake { get; set; }
         public int CarModelId { get; set; }
         public CarModel? CarModel { get; set; }
-        public string Colour { get; set; } = string.Empty;
+        public int CarColourId { get; set; }
+        public CarColour? CarColour { get; set; }
         public double Mileage { get; set; }
         public string Comments { get; set; } = String.Empty;
         public int? AdvertisingPlatformId { get; set; }
@@ -25,5 +26,8 @@
         public int? UserId { get; set; } // capture person who sold the car
         public User? User { get; set; }
         public bool? IsSold { get; set; }
+        public int Year { get; set; }
+        public double? SellingPrice { get; set; }
+        public string VinNumber { get; set; } = String.Empty;
     }
 }

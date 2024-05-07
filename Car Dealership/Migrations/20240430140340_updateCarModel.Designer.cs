@@ -4,6 +4,7 @@ using Car_Dealership.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_Dealership.Migrations
 {
     [DbContext(typeof(TenantContext))]
-    partial class TenantContextModelSnapshot : ModelSnapshot
+    [Migration("20240430140340_updateCarModel")]
+    partial class updateCarModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,9 +135,6 @@ namespace Car_Dealership.Migrations
                     b.Property<DateTime?>("ReturnedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double?>("SellingPrice")
-                        .HasColumnType("float");
-
                     b.Property<double?>("SoldAmount")
                         .HasColumnType("float");
 
@@ -145,13 +145,6 @@ namespace Car_Dealership.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VinNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -169,9 +162,6 @@ namespace Car_Dealership.Migrations
                     b.HasIndex("DeletedById");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("VinNumber")
-                        .IsUnique();
 
                     b.ToTable("Cars");
                 });
