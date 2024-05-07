@@ -1,7 +1,4 @@
-﻿using Car_Dealership.DTOs.AdvertisingPlatform;
-using Car_Dealership.Models;
-
-namespace Car_Dealership.Controllers
+﻿namespace Car_Dealership.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

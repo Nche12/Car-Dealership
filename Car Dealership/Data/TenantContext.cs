@@ -1,6 +1,4 @@
-﻿
-using Car_Dealership.Models;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Car_Dealership.Data
 {
@@ -107,6 +105,9 @@ namespace Car_Dealership.Data
                 .HasIndex(c => c.VinNumber)
                 .IsUnique();
 
+            modelBuilder.Entity<Contact>()
+                .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
+
         }
 
         public DbSet<User> Users { get; set; }
@@ -123,6 +124,7 @@ namespace Car_Dealership.Data
         public DbSet<Frequency> Frequencies { get; set; }
         public DbSet<AdvertisingPlatform> AdvertisingPlatforms { get; set; }
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
