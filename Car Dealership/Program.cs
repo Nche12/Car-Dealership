@@ -19,6 +19,7 @@ global using Car_Dealership.DTOs.Frequency;
 global using Car_Dealership.DTOs.AdvertisingPlatform;
 global using Car_Dealership.DTOs.Car;
 global using Car_Dealership.DTOs.Contact;
+global using Car_Dealership.DTOs.BankAccount;
 
 
 global using AutoMapper;
@@ -50,6 +51,7 @@ builder.Services.AddScoped<IFrequencyService, FrequencyService>();
 builder.Services.AddScoped<IAdvertPlatformService, AdvertPlatformService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IBankAccountService, BankAccountService>();
 
 builder.Services.AddCors(options =>
 {

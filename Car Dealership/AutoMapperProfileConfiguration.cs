@@ -67,6 +67,10 @@ namespace Car_Dealership
             CreateMap<Contact, ContactGetDto>();
             CreateMap<ContactCreateDto, Contact>();
             CreateMap<ContactEditDto, Contact>();
+
+            CreateMap<BankAccount, BankAccountGetDto>();
+            CreateMap<BankAccountCreateDto, BankAccount>();
+            CreateMap<BankAccountEditDto, BankAccount>();
         }
     }
 }

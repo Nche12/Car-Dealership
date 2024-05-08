@@ -125,6 +125,7 @@ namespace Car_Dealership.Data
         public DbSet<AdvertisingPlatform> AdvertisingPlatforms { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
