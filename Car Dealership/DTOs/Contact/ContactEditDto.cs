@@ -7,6 +7,7 @@
         public string? Surname { get; set; } = string.Empty;
         public string? Title { get; set; } = string.Empty;
         public string DisplayName { get; set; } = string.Empty;
+        public int? BankAccountId { get; set; }
         public string? residentialAddress { get; set; } = string.Empty;
         public string? postalAddress { get; set; } = string.Empty;
         public string? IdNumber { get; set; } = string.Empty;

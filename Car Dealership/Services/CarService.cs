@@ -54,7 +54,12 @@
         public async Task<ServiceResponse<CarGetDto?>> GetCarAsync(int id)
         {
             var serviceResponse = new ServiceResponse<CarGetDto?>();
-            var car = await _tenantContext.Cars.FirstOrDefaultAsync(c => c.Id == id);
+            var car = await _tenantContext.Cars
+                .Include(c => c.CarModel)
+                .Include(c => c.CarColour)
+                .Include(c => c.AdvertisingPlatform)
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
             if (car != null)
             {
                 serviceResponse.Data = _mapper.Map<CarGetDto>(car);

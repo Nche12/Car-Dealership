@@ -56,7 +56,9 @@ namespace Car_Dealership.Services
         public async Task<ServiceResponse<ContactGetDto?>> GetContactAsync(int id)
         {
             var serviceResponse = new ServiceResponse<ContactGetDto?>();
-            var contactFound = await _tenantContext.Contacts.FirstOrDefaultAsync(c => c.Id == id);
+            var contactFound = await _tenantContext.Contacts
+                .Include(c => c.BankAccount)
+                .FirstOrDefaultAsync(c => c.Id == id);
             if(contactFound != null)
             {
                 serviceResponse.Data = _mapper.Map<ContactGetDto>(contactFound);
@@ -75,7 +77,9 @@ namespace Car_Dealership.Services
         public async Task<ServiceResponse<IEnumerable<ContactGetDto>>> GetContactsAsync()
         {
             var serviceResponse = new ServiceResponse<IEnumerable<ContactGetDto>>();
-            var contacts = await _tenantContext.Contacts.ToArrayAsync();
+            var contacts = await _tenantContext.Contacts
+                .Include(c => c.BankAccount)
+                .ToArrayAsync();
             serviceResponse.Data = contacts.Select(c => _mapper.Map<ContactGetDto>(c)).ToList();
             serviceResponse.StatusCode = StatusCodes.Status200OK;
             return serviceResponse;
