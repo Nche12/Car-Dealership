@@ -1,7 +1,4 @@
-﻿
-using Car_Dealership.DTOs.Contact;
-
-namespace Car_Dealership
+﻿namespace Car_Dealership
 {
     public class AutoMapperProfileConfiguration : Profile
     {
@@ -50,6 +47,10 @@ namespace Car_Dealership
             CreateMap<Client, ClientGetDto>();
             CreateMap<ClientCreateDto, Client>();
             CreateMap<ClientEditDto, Client>();
+
+            CreateMap<Owner, OwnerGetDto>();
+            CreateMap<OwnerCreateDto, Owner>();
+            CreateMap<OwnerEditDto, Owner>();
 
             CreateMap<Frequency,  FrequencyGetDto>();
             CreateMap<FrequencyCreateDto, Frequency>();

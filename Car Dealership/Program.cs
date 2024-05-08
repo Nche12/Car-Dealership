@@ -20,6 +20,7 @@ global using Car_Dealership.DTOs.AdvertisingPlatform;
 global using Car_Dealership.DTOs.Car;
 global using Car_Dealership.DTOs.Contact;
 global using Car_Dealership.DTOs.BankAccount;
+global using Car_Dealership.DTOs.Owner;
 
 
 global using AutoMapper;
@@ -47,6 +48,7 @@ builder.Services.AddScoped<ICarTypeService, CarTypeService>();
 builder.Services.AddScoped<ICarDriveTypeService, CarDriveTypeService>();
 builder.Services.AddScoped<ICarColourService, CarColourService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IFrequencyService, FrequencyService>();
 builder.Services.AddScoped<IAdvertPlatformService, AdvertPlatformService>();
 builder.Services.AddScoped<ICarService, CarService>();

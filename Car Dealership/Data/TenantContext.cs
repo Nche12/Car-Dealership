@@ -94,6 +94,14 @@ namespace Car_Dealership.Data
             modelBuilder.Entity<Client>()
                 .HasQueryFilter(c => c.IsDeleted == null || c.IsDeleted == false);
 
+            modelBuilder.Entity<Owner>()
+                .HasOne(o => o.AdvertisingPlatform)
+                .WithMany()
+                .HasForeignKey(o => o.AdvertisingPlatformId)
+                .OnDelete(DeleteBehavior.Restrict);// or .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Owner>()
+                .HasQueryFilter(o => o.IsDeleted == null || o.IsDeleted == false);
+
             modelBuilder.Entity<Frequency>()
                 .HasQueryFilter(f => f.IsDeleted == null || f.IsDeleted == false);
                 
@@ -121,6 +129,7 @@ namespace Car_Dealership.Data
         public DbSet<CarDriveType> CarDriveTypes { get; set; }
         public DbSet<CarColour> CarColours { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Owner> Owners { get; set; }
         public DbSet<Frequency> Frequencies { get; set; }
         public DbSet<AdvertisingPlatform> AdvertisingPlatforms { get; set; }
         public DbSet<Car> Cars { get; set; }
